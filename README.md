@@ -47,6 +47,14 @@ Between the two screenshots the only change was one line in `pipeline.yml`. The 
 build and deploy, and the live page picked up the new message, a new run number (3 → 4) and the new
 commit (`f20d0f1` → `c9c8a00`). No manual deploy.
 
+**Run 5: after fixing the test (see [Issues found and fixed](#issues-found-and-fixed)), deployed by the same pipeline**
+
+![Live site, run 5](docs/screenshots/04-live-site-run5-after-test-fix.png)
+
+**Run 5 in the Actions tab: test → build → deploy, all green, 31 s end to end**
+
+![Actions run 5](docs/screenshots/05-actions-run5-test-build-deploy.png)
+
 ---
 
 ## How it works
@@ -221,7 +229,9 @@ Checked on **7 Nov 2026** with Playwright (headless Chromium) and the GitHub CLI
 | Check | Result |
 |-------|--------|
 | Live site `https://forsythfamous.github.io/pipeit-weekend/` | HTTP 200, title `pipeline's pipeline` |
-| Page content matches the latest run | Run 4, commit `c9c8a00`, built 07 Nov 2026 10:27 UTC, started by `push`, custom message shown |
+| Page content before this README | Run 4, commit `c9c8a00`, built 07 Nov 2026 10:27 UTC, started by `push`, custom message shown |
+| Page content after this README was pushed | Run 5, commit `ef59a69`, built 07 Nov 2026 10:44 UTC: site updated by itself |
+| Test really runs in CI (after fix) | `Run my checks` log prints `✅ README has a title` |
 | `pipeline` workflow runs | Latest runs `success` (test → build → deploy) |
 | `hello` workflow runs | Latest runs `success` |
 | Pages source | `build_type: workflow` (GitHub Actions) |
@@ -256,7 +266,9 @@ Verifying the repo against the lab turned up three things worth recording.
    `pipeline.yml` instead, which still gates the deploy.
 3. **Action versions differ from the lab.** This repo uses `actions/checkout@v4`,
    `actions/upload-pages-artifact@v3` and `actions/deploy-pages@v4`. The lab shows `@v7`, `@v5`
-   and `@v5`. Both sets work; the versions here are the ones the runs above passed with.
+   and `@v5`. The older versions still pass, but every run now shows a *"Node.js 20 is deprecated"*
+   warning on `test`, `build` and `deploy` (visible in the run 5 screenshot). Upgrading to the lab's
+   versions is the next change.
 
 ---
 
