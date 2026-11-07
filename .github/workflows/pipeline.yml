@@ -34,7 +34,7 @@ jobs:
         uses: ./.github/actions/build-card
         with:
           name: pipeline
-          message: Built automatically by my own GitHub Action
+          message: On the 7th of November this message was changed to reflect the changes
 
       - name: Package the website
         uses: actions/upload-pages-artifact@v3
