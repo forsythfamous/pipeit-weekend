@@ -1,4 +1,4 @@
-name: ci
+name: 4syth
 
 on:
   push:
@@ -17,4 +17,4 @@ jobs:
       - name: Try my own action
         uses: ./.github/actions/build-card
         with:
-          name: Your Name
+          name: 4syth
